@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingshen.rongaixiang.mapper.JobMapper">
+  <resultMap id="BaseResultMap" type="com.dingshen.rongaixiang.domain.Job">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="jobname" jdbcType="VARCHAR" property="jobName" />
+    <result column="jobdescription" jdbcType="VARCHAR" property="jobDescription" />
+    <result column="jobnature" jdbcType="VARCHAR" property="jobNature" />
+    <result column="experience" jdbcType="VARCHAR" property="experience" />
+    <result column="additional" jdbcType="VARCHAR" property="additional" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
+    <result column="createtime" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, jobname, jobdescription, jobnature, experience, additional,
+    salary, createtime
+  </sql>
+  <select id="findAllJob" parameterType="java.util.Map" resultType="com.dingshen.rongaixiang.domain.Job">
+    select * from job where 1=1
+    <if test="type != null">
+      and product.scale = #{type}
+    </if>
+    <if test="keyword != null">
+      and job.jobname like #{keyword}
+    </if>
+  </select>
+  <select id="getJobList" resultType="java.util.Map">
+    select * from job
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dingshen.rongaixiang.domain.Job">
+    insert into job (id, jobname, jobdescription,
+      jobnature, experience, additional,
+      salary, createtime)
+    values (#{id,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, #{jobDescription,jdbcType=VARCHAR}, 
+      #{jobNature,jdbcType=VARCHAR}, #{experience,jdbcType=VARCHAR}, #{additional,jdbcType=VARCHAR},
+      #{salary,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dingshen.rongaixiang.domain.Job">
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="jobName != null">
+        jobname,
+      </if>
+      <if test="jobDescription != null">
+        jobdescription,
+      </if>
+      <if test="jobNature != null">
+        jobnature,
+      </if>
+      <if test="experience != null">
+        experience,
+      </if>
+      <if test="additional != null">
+        additional,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+      <if test="createTime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDescription != null">
+        #{jobDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNature != null">
+        #{jobNature,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="additional != null">
+        #{additional,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingshen.rongaixiang.domain.Job">
+    update job
+    <set>
+      <if test="jobName != null">
+        jobname = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDescription != null">
+        jobdescription = #{jobDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNature != null">
+        jobnature = #{jobNature,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        experience = #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="additional != null">
+        additional = #{additional,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createtime = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dingshen.rongaixiang.domain.Job">
+    update job
+    <set>
+      <if test="jobName != null">
+        jobname = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDescription != null">
+        jobdescription = #{jobDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNature != null">
+        jobnature = #{jobNature,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        experience = #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="additional != null">
+        additional = #{additional,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createtime = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

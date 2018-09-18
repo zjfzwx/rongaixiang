@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--环境配置-->
+    <context id="mycontext" targetRuntime="MyBatis3">
+        <!--是否生成注释-->
+        <commentGenerator>
+            <!--不生成注释-->
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+        <!--JDBC连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/rongaixiang"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <!--不适用BigDecimal ，如果设置为true Mybatis中所有的数字类型统一会被设置为BigDecimal（大数字）
+                false的时候，则根据数据库字段类型动态生成对应的Integer、Long、Double、Float
+            -->
+            <property name="forceBigDecimals" value="false"></property>
+        </javaTypeResolver>
+        <!--实体类生成的设置-->
+        <javaModelGenerator targetPackage="com.dingshen.rongaixiang.domain" targetProject="E:\rongaixiang\src\main\java">
+            <!-- 根据包名自动生成对应的目录 -->
+            <property name="enableSubPackages" value="true"></property>
+        </javaModelGenerator>
+        <!--生成mapper XML -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="E:\rongaixiang\src\main\resources\mybatis">
+            <property name="enableSubPackages" value="true"></property>
+        </sqlMapGenerator>
+        <!-- Mapper接口的设置 XMLMAPPER ，代表生成xml文件-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dingshen.rongaixiang.mapper"  targetProject="E:\rongaixiang\src\main\java">
+            <property name="enableSubPackages" value="true"></property>
+        </javaClientGenerator>
+        <!-- 生成Mapper -->
+        <table tableName="image" domainObjectName="Image" enableSelectByExample="false"
+               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+            <columnOverride column="content_text" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Primex</title>
+    <!-- Web Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,900,700,500,300' rel='stylesheet' type='text/css'>
+    <!-- Flaticon CSS -->
+    <link href="fonts/flaticon/flaticon.css" rel="stylesheet">
+    <!-- font-awesome CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- owl.carousel CSS -->
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="owl-carousel/owl.theme.css" rel="stylesheet">
+    <!-- Offcanvas CSS -->
+    <link href="css/hippo-off-canvas.css" rel="stylesheet">
+    <!-- animate CSS -->
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- magnific-popup -->
+    <link href="css/magnific-popup.css" rel="stylesheet">
+	<!-- REVOLUTION BANNER CSS SETTINGS -->
+	<link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link href="css/responsive.css" rel="stylesheet">
+
+    <script src="js/vendor/modernizr-2.8.1.min.js"></script>
+    <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	    <script src="js/vendor/html5shim.js"></script>
+	    <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+
+	<body>
+	 <div id="st-container" class="st-container">
+	    <div class="st-pusher">
+	      <div class="st-content">
+	        <div class="st-content-inner">
+
+				<section class="page-header-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="page-header">
+								  <h1>产品中心</h1>
+								</div>
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.container-->
+				</section>
+
+				<div class="container">
+					<div class="content-wrapper">
+						<div class="inner-content">
+							<div class="row">
+								<div class="col-md-7">
+									<div class="portfolio-content">
+										<img th:src="@{'showImage?filename='+${singleImage.imgName}}" class="img-responsive" alt="">
+									</div> <!-- /.portfolio-content -->
+								</div> <!-- /.col-md-7 -->
+
+								<div class="col-md-5">
+									<div class="portfolio-info">
+										<p ><span class="title">产品名称:</span> </p>
+										<p th:text="${productName}"></p>
+										<p ><span class="title">产品类型:</span> </p>
+										<p th:text="${singleImage.imgType}"></p>
+										<p><span class="title">产品信息 :</span></p>
+
+										<p th:text="${singleImage.imgInfomation}"></p>
+
+									</div> <!-- /.portfolio-info -->
+								</div> <!-- /.col-md-5 -->
+							</div> <!-- /.row -->
+							<br>
+							<hr>
+
+
+						</div><!-- /.inner-content -->
+					</div><!-- /.content-wrapper -->
+				</div><!-- /.container -->
+
+				<section id="contactUs" class="footer-widget-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6 col-sm-12">
+								<div class="footer-widget">
+
+									<h3 class="wow fadeInDown">联系我们</h3>
+									<p>你可以通过以下方式联系我们</p>
+									<!--<form class="wow fadeInDown">-->
+									<!--<div class="form-group">-->
+									<!--<label class="sr-only" for="exampleInputEmail1">Email address</label>-->
+									<!--<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">-->
+									<!--</div>-->
+									<!--<button type="submit" class="btn btn-primary">提交</button>-->
+									<!--</form>-->
+
+									<div class="social-link wow fadeInDown">
+										<p>手机：18680743838</p>
+										<p>邮箱：xbdfbi@163.com</p>
+										<ul>
+											<li><a href="#"><i class="fa fa-qq"></i></a></li>
+											<li><a href="#"><i class="fa fa-wechat"></i></a></li>
+										</ul>
+									</div>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-md-6 -->
+							<div class="col-md-2 col-sm-4 col-xs-4">
+								<div class="footer-widget">
+									<h3 class="wow fadeInDown">合作伙伴</h3>
+									<ul class="wow fadeInDown">
+										<li><a href="#">Customer Support</a></li>
+										<li><a href="#">Platinum Support</a></li>
+										<li><a href="#">Gold Support</a></li>
+									</ul>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-md-2 -->
+							<div class="col-md-2 col-sm-4 col-xs-4">
+								<div class="footer-widget">
+									<h3 class="wow fadeInDown">主打产品</h3>
+									<ul class="wow fadeInDown">
+										<li><a href="#">Press</a></li>
+										<li><a href="#">Articles</a></li>
+										<li><a href="#">Reviews</a></li>
+
+									</ul>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-md-2 -->
+							<div class="col-md-2 col-sm-4 col-xs-4">
+								<div class="footer-widget">
+									<h3 class="wow fadeInDown">解决方案</h3>
+									<ul class="wow fadeInDown">
+										<li><a href="#contactUs">联系我们</a></li>
+										<li><a href="#">提供建议</a></li>
+										<li><a href="#">举报投诉</a></li>
+									</ul>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-md-2 -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</section>
+
+				<footer class="footer-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="copyright">
+									<p>Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+								</div><!-- /.copyright -->
+							</div><!-- /.col-md-12 -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</footer>
+		       </div> <!-- .st-content-inner -->
+		    </div> <!-- .st-content -->
+		  </div> <!-- .st-pusher -->
+
+
+			<!-- ======== OFFCANVAS MENU ========= -->
+		    <!--<div class="offcanvas-menu offcanvas-effect visible-xs">-->
+		        <!--<button type="button" class="close" aria-hidden="true" data-toggle="offcanvas" id="off-canvas-close-btn">&times;</button>-->
+		        <!--<h3>Sidebar Menu</h3>-->
+		        <!--<div>-->
+		          <!--<div>-->
+					<!--<ul>-->
+						<!--<li><a href="#">Home</a>-->
+							<!--<ul>-->
+								<!--<li><a href="index.html"><i class="fa fa-home"></i> Home Style One</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+
+						<!--<li><a href="#">About</a>-->
+							<!--<ul>-->
+								<!--<li><a href="../public/about-us.html"><i class="fa fa-life-ring"></i> About Us</a></li>-->
+								<!--<li><a href="../public/about-me.html"><i class="fa fa-user"></i> About me</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+
+						<!--<li><a href="#">Blog</a>-->
+							<!--<ul>-->
+								<!--<li><a href="../public/blog.html"><i class="fa fa-pencil-square-o"></i> Standard Blog</a></li>-->
+								<!--<li><a href="../public/blog-single.html"><i class="fa fa-pencil"></i> Single Article</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+
+						<!--<li><a href="#">Portfolio</a>-->
+							<!--<ul>-->
+								<!--<li class="active"><a href="../public/portfolio-four.html"><i class="fa fa-picture-o"></i> Four Column</a></li>-->
+								<!--<li><a href="../public/portfolio-three.html"><i class="fa fa-paper-plane-o"></i> Three Column</a></li>-->
+								<!--<li><a href="../public/portfolio-two.html"><i class="fa fa-magic"></i> Two Column</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+
+						<!--<li><a href="#">Pages</a>-->
+							<!--<ul>-->
+								<!--<li><a href="../public/job-page.html"><i class="fa fa-briefcase"></i> Job Page</a></li>-->
+								<!--<li><a href="../public/clients-page.html"><i class="fa fa-coffee"></i> Clients Page</a></li>-->
+								<!--<li><a href="../public/faq.html"><i class="fa fa-question-circle"></i> FAQ Page</a></li>-->
+								<!--<li><a href="../public/typography.html"><i class="fa fa-puzzle-piece"></i> Typography Page</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+
+						<!--<li><a href="#">Contact</a>-->
+							<!--<ul>-->
+								<!--<li><a href="../public/contact.html"><i class="fa fa-envelope-o"></i> Contact</a></li>-->
+							<!--</ul>-->
+						<!--</li>-->
+					<!--</ul>-->
+		          <!--</div>-->
+		        <!--</div>-->
+		    <!--</div>&lt;!&ndash; .offcanvas-menu &ndash;&gt;-->
+		</div><!-- /st-container -->
+
+
+		<!-- Preloader -->
+		<div id="preloader">
+			<div id="status">
+				<div class="status-mes"></div>
+			</div>
+		</div>
+
+
+
+	    <!-- jQuery -->
+	    <script src="js/jquery.js"></script>
+	    <!-- Bootstrap Core JavaScript -->
+	    <script src="js/bootstrap.min.js"></script>
+	    <!-- wow.min.js -->
+	    <script src="js/wow.min.js"></script>
+		<!-- jQuery REVOLUTION Slider  -->
+		<script type="text/javascript" src="rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+		<script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+	    <!-- owl-carousel -->
+	    <script src="owl-carousel/owl.carousel.min.js"></script>
+	    <!-- smoothscroll -->
+	    <script src="js/smoothscroll.js"></script>
+		<!-- Offcanvas Menu -->
+		<script src="js/hippo-offcanvas.js"></script>
+		<!-- easypiechart -->
+		<script src="js/jquery.easypiechart.min.js"></script>
+	    <!-- Scrolling Nav JavaScript -->
+	    <script src="js/jquery.easing.min.js"></script>
+		<!-- Magnific-popup -->
+		<script src="js/jquery.magnific-popup.min.js"></script>
+		<!-- Shuffle.min js -->
+		<script src="js/jquery.shuffle.min.js"></script>
+	    <!-- Custom Script -->
+	    <script src="js/scripts.js"></script>
+	</body>
+</html>

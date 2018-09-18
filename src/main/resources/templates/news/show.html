@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+       xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form" action=""> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="hidden" name="id"  class="layui-input" th:value="${showNews.id}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" readonly th:value="${showNews.title}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-block">
+            <input type="text" name="author" lay-verify="required" readonly th:value="${showNews.author}"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea   name="content" class="layui-textarea" readonly th:text="${showNews.content}" id="textarea"  lay-verify="article_desc"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发布时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="author" lay-verify="required" readonly th:value="${showNews.releaseTime}"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">最近修改时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="author" lay-verify="required" readonly th:value="${showNews.updateTime}"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">修改人</label>
+        <div class="layui-input-block">
+            <input type="text" name="author" lay-verify="required" readonly th:value="${showNews.modifier}"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片信息</label>
+        <div class="layui-input-inline" >
+            <img th:each="imageName:${imageName}" width="50"style="padding: 2px" name="fileName" height="50" th:src="@{'showImage?filename='+${imageName}}">
+        </div>
+    </div>
+    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+<script src="layui/layui.all.js" type="text/javascript"></script>
+</body>
+</html>

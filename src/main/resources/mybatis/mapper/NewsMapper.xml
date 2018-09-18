@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingshen.rongaixiang.mapper.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.dingshen.rongaixiang.domain.News">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="releasetime" jdbcType="DATE" property="releaseTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="updatetime" jdbcType="DATE" property="updateTime" />
+    <result column="imagename" jdbcType="VARCHAR" property="imageName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, author, content, releasetime, modifier, title, updatetime,imagename
+  </sql>
+  <select id="findAllNews" parameterType="java.util.Map" resultType="com.dingshen.rongaixiang.domain.News">
+    select * from news where 1=1
+    <if test="type != null">
+      and product.scale = #{type}
+    </if>
+    <if test="keyword != null">
+      and news.title like #{keyword}
+    </if>
+  </select>
+  <select id="getAllNews" resultType="java.util.Map">
+    select * from news
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dingshen.rongaixiang.domain.News">
+    insert into news (id, author, content, 
+      releasetime, modifier, title,imagename,
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{releaseTime,jdbcType=DATE}, #{modifier,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{imageName,jdbcType=VARCHAR},#{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dingshen.rongaixiang.domain.News">
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="releaseTime != null">
+        releasetime,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="imageName != null">
+        imagename,
+      </if>
+      <if test="updateTime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        #{releaseTime,jdbcType=DATE},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+        #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingshen.rongaixiang.domain.News">
+    update news
+    <set>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        releasetime = #{releaseTime,jdbcType=DATE},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+        imagename = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        updatetime = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dingshen.rongaixiang.domain.News">
+    update news
+    <set>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        releasetime = #{releaseTime,jdbcType=DATE},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+        imagename = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        updatetime = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

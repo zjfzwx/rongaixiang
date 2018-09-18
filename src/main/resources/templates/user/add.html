@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+<form  class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" lay-verify="password" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男" checked="true">
+            <input type="radio" name="sex" value="女" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+<script src="layui/layui.all.js" type="text/javascript"></script>
+<script>
+        var form = layui.form; //只有执行了这一步，部分表单元素才会修饰成功
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,password: [/(.+){6,12}$/, '密码必须6到12位']
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+        form.on('submit(demo1)', function(data){
+        $.ajax({
+            type: "post",
+            url: "userAdd",
+            data:data.field,
+            dataType: "json",
+            success: function (result) {
+                parent.layer.msg(result.success, {
+                    icon: 1, //图标
+                    offset: '200px',//对话框距离页面上边距200px
+                    time: 2000 //两秒后自动关闭
+                    })
+                },
+            error:function(result){
+                parent.layer.msg(result.error, {
+                    icon: 1, //图标
+                    offset: '200px',//对话框距离页面上边距200px
+                    time: 2000 //两秒后自动关闭
+                })
+            }
+        })
+        parent.layer.close(index); //再执行关闭
+        parent.layui.table.reload("grdContent");
+    })
+</script>
+</body>
+</html>

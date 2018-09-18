@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingshen.rongaixiang.mapper.ImageMapper">
+  <resultMap id="BaseResultMap" type="com.dingshen.rongaixiang.domain.Image">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="img_name" jdbcType="VARCHAR" property="imgName" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="img_Infomation" jdbcType="VARCHAR" property="imgInfomation" />
+    <result column="img_type" jdbcType="VARCHAR" property="imgType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, img_name, img_url, img_Infomation, img_type
+  </sql>
+  <select id="findAllImage" resultType="java.util.Map">
+    select * from image where img_type!=""
+  </select>
+  <select id="findIdByName" parameterType="String" resultType="Integer">
+    select id from image where img_name=#{imageName,jdbcType=VARCHAR}
+  </select>
+  <select id="findAllImageIds" parameterType="String" resultType="Integer">
+    select id from image where image.img_type= #{productType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dingshen.rongaixiang.domain.Image">
+    insert into image (id, img_name, img_url, 
+      img_Infomation, img_type)
+    values (#{id,jdbcType=INTEGER}, #{imgName,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{imgInfomation,jdbcType=VARCHAR}, #{imgType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dingshen.rongaixiang.domain.Image">
+    insert into image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="imgName != null">
+        img_name,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="imgInfomation != null">
+        img_Infomation,
+      </if>
+      <if test="imgType != null">
+        img_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imgName != null">
+        #{imgName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgInfomation != null">
+        #{imgInfomation,jdbcType=VARCHAR},
+      </if>
+      <if test="imgType != null">
+        #{imgType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingshen.rongaixiang.domain.Image">
+    update image
+    <set>
+      <if test="imgName != null">
+        img_name = #{imgName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgInfomation != null">
+        img_Infomation = #{imgInfomation,jdbcType=VARCHAR},
+      </if>
+      <if test="imgType != null">
+        img_type = #{imgType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dingshen.rongaixiang.domain.Image">
+    update image
+    set img_name = #{imgName,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      img_Infomation = #{imgInfomation,jdbcType=VARCHAR},
+      img_type = #{imgType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

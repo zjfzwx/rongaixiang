@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+       xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form" action=""> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="hidden" name="id" id="newsId"  class="layui-input" th:value="${updateNews.id}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" id="title" lay-verify="title" th:value="${updateNews.title}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-block">
+            <input type="text" name="author" id="author" lay-verify="required" th:value="${updateNews.author}"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea   name="content" class="layui-textarea" th:text="${updateNews.content}" id="textarea"  lay-verify="article_desc"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片上传</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="test1">
+                <i class="layui-icon">&#xe67c;</i>选择图片（最多20张，单张最大10M）
+            </button>
+            <button type="button" class="layui-btn" id="test9">开始上传</button>
+            <button type="button" class="layui-btn" id="cleanImgs"> <i class="fa fa-trash-o fa-lg"></i>清空图片预览</button>
+        </div>
+        <div class="layui-input-block">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>
+        </div>
+    </div>
+    <input type="text" id="imgUrls" name="imgUrls" style="display: none;" class="layui-input">
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片信息</label>
+        <div class="layui-input-inline">
+            <!--<img width="50" height="50" th:src="@{'showImage?filename='+${updateProduct.fileName}}">-->
+            <img th:each="imageName:${imageName}" width="50"style="padding: 2px" name="fileName" height="50" th:src="@{'showImage?filename='+${imageName}}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" type="button" style="width: 80px;" id="btnSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+<script src="layui/layui.all.js" type="text/javascript"></script>
+<script>
+    var form = layui.form; //只有执行了这一步，部分表单元素才会修饰成功
+    var layedit=layui.layedit;
+    //var lay_edit=layedit.build('textarea');
+    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    //自定义验证规则
+    form.verify({
+        title: function(value){
+            if(value.length < 5){
+                return '标题至少得5个字符啊';
+            }
+        }
+        ,article_desc: function(value){
+            layedit.sync(lay_edit);
+        }
+        ,password: [/(.+){6,12}$/, '密码必须6到12位']
+    });
+//    form.on('submit(demo1)', function(data){
+//        $.ajax({
+//            type: "post",
+//            url: "newsUpdate",
+//            data: data.field,
+//            dataType:"json",
+//            success: function (result) {
+//                parent.layer.msg(result.success, {
+//                    icon: 1, //图标
+//                    offset: '200px',//对话框距离页面上边距200px
+//                    time: 2000 //两秒后自动关闭
+//                })
+//            },
+//            error:function(result){
+//                parent.layer.msg(result.error, {
+//                    icon: 1, //图标
+//                    offset: '200px',//对话框距离页面上边距200px
+//                    time: 2000 //两秒后自动关闭
+//                })
+//            }
+//        })
+//        parent.layer.close(index); //再执行关闭
+//        parent.layui.table.reload("grdContent");
+//        return false;
+//    });
+    /**
+     * 图片上传数量及其大小等控制
+     * 点击开始上传按钮(test9)，执行上传
+     *
+     */
+    var success=0;
+    var fail=0;
+    var imgurls="";
+    //图片上传
+    $(function (){
+        var imgsName="";
+        layui.use(['upload','layer'],function() {
+            var upload = layui.upload;
+            var layer=layui.layer;
+
+            upload.render({
+                elem: '#test1',
+                url: 'upload',
+                multiple: true,
+                auto:false,
+//			上传的单个图片大小
+                size:10240,
+//			最多上传的数量
+                number:20,
+//			MultipartFile file 对应，layui默认就是file,要改动则相应改动
+                field:'file',
+                bindAction: '#test9',
+                before: function(obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result) {
+                        $('#demo2').append('<img src="' + result
+                            + '" alt="' + file.name
+                            +'"height="92px" width="92px" class="layui-upload-img uploadImgPreView">')
+                    });
+                },
+                done: function(res, index, upload) {
+                    //每个图片上传结束的回调，成功的话，就把新图片的名字保存起来，作为数据提交
+                    console.log(res.code);
+                    if(res.code=="1"){
+                        fail++;
+                    }else{
+                        success++;
+                        imgurls=imgurls+""+res.data.fileName+",";
+                        $('#imgUrls').val(imgurls);
+                    }
+                },
+                allDone:function(obj){
+                    layer.msg("总共要上传图片总数为："+(fail+success)+"\n\n"
+                        +"其中上传成功图片数为："+success+"\n\n"
+                        +"其中上传失败图片数为："+fail
+                    )
+                }
+            });
+
+        });
+
+        //清空预览图片
+        cleanImgsPreview();
+        //保存商品
+        goodsSave();
+    });
+
+    /**
+     * 清空预览的图片及其对应的成功失败数
+     * 原因：如果已经存在预览的图片的话，再次点击上选择图片时，预览图片会不断累加
+     * 表面上做上传成功的个数清0，实际后台已经上传成功保存了的，只是没有使用，以最终商品添加的提交的为准
+      */
+    function cleanImgsPreview(){
+        $("#cleanImgs").click(function(){
+            success=0;
+            fail=0;
+            $('#demo2').html("");
+            $('#imgUrls').val("");
+        });
+    }
+
+    /**
+     * 保存商品
+     */
+    function goodsSave(){
+        $('#btnSubmit').click(function(){
+            var id=$("#newsId").val();
+            var ius=$("#imgUrls").val();
+            var title=$("#title").val();
+            var author=$("#author").val();
+            var content=$("#textarea").val();
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            $.ajax({
+                type: "POST",
+                url: "newsUpdate",
+                data: {
+                    id:id,
+                    imgUrls:ius,
+                    title:title,
+                    author:author,
+                    content:content
+                },
+                success: function(msg){
+                    if(msg=="1"){
+                        parent.layer.msg("修改成功", {
+                            icon: 1, //图标
+                            offset: '200px',//对话框距离页面上边距200px
+                            time: 2000 //两秒后自动关闭
+                        })
+                    }else{
+                        parent.layer.msg("修改失败", {
+                            icon: 1, //图标
+                            offset: '200px',//对话框距离页面上边距200px
+                            time: 2000 //两秒后自动关闭
+                        })
+                    }
+                    parent.layer.close(index); //再执行关闭
+                    parent.layui.table.reload("grdContent");
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

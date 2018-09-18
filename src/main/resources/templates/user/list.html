@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 引入LayuiCSS -->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/modules/layer/default/layer.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+<!--
+    layui-table 代表是一个表格
+    url : ajax获取数据的地址
+    page : 自动生成分页栏
+    height:auto 表格高度随着内容自适应
+-->
+<div class="layui-row">
+    <!-- layui表单 -->
+    <form class="layui-form">
+        <!-- layui-inline 在一个行中显示多个div -->
+        <div class="layui-inline">
+            <div class="layui-input-inline" style="width: 200px">
+                <input type="text" id="keyword" name="keyword" placeholder="请输入要查询的关键字" autocomplete="off" class="layui-input">
+            </div>
+            <a href="javascript:void(0)" id="btnQuery" class="layui-btn">查询</a>
+            <a href="javascript:void(0)" id="btnAdd" class="layui-btn">添加</a>
+        </div>
+
+    </form>
+</div>
+<table class="layui-table" lay-data="{url:'/userList' , page:true ,id:'grdContent', height : 'auto',done : doneRefresh}" lay-filter="grdContent">
+    <thead>
+    <tr>
+        <th lay-data="{field:'id' , width:150 , sort : true}">ID</th>
+        <th lay-data="{field:'username' , width:100 }">用户名</th>
+        <th lay-data="{field:'password' , width:100 }">密码</th>
+        <th lay-data="{field:'sex' , width:100 }">性别</th>
+        <th lay-data="{field:'operation' , width:100 ,templet:'#operation'}">操作</th>
+    </tr>
+    </thead>
+</table>
+<div id="operation" style="display: none">
+    <div>
+        <button class="layui-btn layui-btn-normal layui-btn-xs " name="btnUpdate" uid="{{d.id}}">修改</button>
+        <button class="layui-btn layui-btn-danger layui-btn-xs " name="btnDelete" uid= "{{d.id}}">删除</button>
+    </div>
+</div>
+
+<!-- 利用JS初始化上面的table组件 -->
+<script src="layui/layui.js" type="text/javascript"></script>
+<script>
+
+    //初始组件
+    //按模块初始化相应组件 layer代表布局组件 ,element代表表单项与常用元素  table 代表数据表格模块, form代表表单模块
+    layui.use(["layer" , "element" , "table" , "form"] , function(){
+
+        //$就是jquery ，layui自动内嵌了jquery，layui.$相当于获取了jquery对象
+        var $ = layui.$;
+        //获取layui的table模块对象
+        var table = layui.table;
+        //查询时间
+        $("#btnQuery").click(function(){
+            //在我们使用旧版本，获取下拉框value的时候val()方法是无效的。
+            //我们使用的当前版本修正了这个bug
+            var keyword = $("#keyword").val();
+            table.reload("grdContent" , {
+                url : "/userList" ,
+                where : {
+                    "keyword" : keyword
+                }
+            })
+        });
+        $("#btnAdd").on("click",function () {
+            layer.open({
+                type: 2,
+                title: '添加用户',
+                area: ['500px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/toUserAdd'
+            });
+        })
+    })
+    function doneRefresh() {
+        var table = layui.table;
+        $("button[name='btnDelete']").click(function () {
+            //attr用于获取或设置元素的指定属性
+            //$(this)代表当前事件产生的对象
+            var uid = $(this).attr("uid");
+            $.ajax({
+                url: "/userDeleteById",
+                data: {"uid": uid},
+                dataType: "json",
+                success: function (json) {
+                    console.log(json);
+                    layer.msg(json.msg, {
+                        icon: 1, //图标
+                        offset: '200px',//对话框距离页面上边距200px
+                        time: 2000 //两秒后自动关闭
+                    })
+                    table.reload("grdContent");
+                }
+            })
+        })
+
+
+        $("button[name='btnUpdate']").on("click",function () {
+            var uid = $(this).attr("uid");
+            layer.open({
+                type: 2,
+                title: '修改用户',
+                area: ['500px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/toUserUpdate?uid='+uid
+            });
+        })
+
+
+    }
+</script>
+</body>
+</html>
