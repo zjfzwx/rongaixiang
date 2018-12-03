@@ -31,8 +31,8 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">产品信息</label>
-        <div class="layui-input-inline">
-            <input type="text" name="information" readonly="readonly" th:value="${showProduct.information}" class="layui-input">
+        <div class="layui-input-block">
+            <textarea type="text" style="height: 80px;width: 300px" name="information" readonly="readonly" th:text="${showProduct.information}" class="layui-input"></textarea>
         </div>
     </div>
     <div class="layui-form-item">

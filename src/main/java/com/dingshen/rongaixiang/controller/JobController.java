@@ -33,7 +33,8 @@ public class JobController {
     @ResponseBody
     @RequestMapping("/getJobList")
     public List<Map> getJobList() {
-        return jobService.getJobList();
+        List<Map> jobList=jobService.getJobList();
+        return jobList;
     }
     @RequestMapping("/getJobById")
     public Job getJobById(Integer id){

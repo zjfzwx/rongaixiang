@@ -13,6 +13,10 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Autowired
     UserService userService;
+    @RequestMapping("/toMap")
+    public String toMap(){
+        return "map1";
+    }
     @RequestMapping("/login")
     public String login(){
         return "login";
@@ -23,12 +27,13 @@ public class LoginController {
     }
     @RequestMapping("/logincheck")
     public ModelAndView logincheck(User user, ModelAndView modelAndView, HttpSession session){
-        if (user.getUsername().equals("admin")&&user.getPassword().equals("123456")){
+        if (userService.checkUserName(user)){
             modelAndView.addObject("username",user.getUsername());
             session.setAttribute("loginUser",user.getUsername());
           modelAndView.setViewName("admin");
         }else {
             modelAndView.addObject("message","用户名或密码错误");
+            modelAndView.setViewName("login");
         }
         return modelAndView;
     }

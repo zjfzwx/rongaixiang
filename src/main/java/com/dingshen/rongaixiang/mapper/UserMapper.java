@@ -18,7 +18,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    List<Map> findAllUser(Map params);
+    List<User> findAllUser(Map params);
 
     List<Map> getAllUser();
+    User checkUserName(User user);
 }

@@ -17,7 +17,8 @@ public interface ImageMapper {
     int updateByPrimaryKeySelective(Image record);
 
     int updateByPrimaryKey(Image record);
-    List<Map> findAllImage();
+
+    List<Map> findAllImage(Map map);
 
     List<Integer> findAllImageIds(String productType);
     Integer findIdByName(String imageName);

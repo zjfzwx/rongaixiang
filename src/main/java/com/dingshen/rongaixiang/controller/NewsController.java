@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -51,8 +53,7 @@ public class NewsController {
             }
             modelAndView.addObject("stringList",stringList);
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dt = simpleDateFormat.format(news.getReleaseTime());
+        String dt = news.getReleaseTime();
         modelAndView.addObject("dt",dt);
         modelAndView.addObject("news",news);
         modelAndView.setViewName("news-single");
@@ -73,14 +74,26 @@ public class NewsController {
             }
             news.setImageName(imgName.toString());
         }
-        news.setReleaseTime(new Date());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        news.setReleaseTime(df.format(new Date()));
         newsService.insert(news);
         return "1";
     }
     @RequestMapping("/newsUpdate")
     @ResponseBody
     public String updateNews(News news, HttpSession session,String imgUrls){
+        News news1=newsService.selectByPrimaryKey(news.getId());
+        String imageNames=news1.getImageName();
         if (!imgUrls.equals("")&&imgUrls!=null) {
+            //删掉之前的图片
+            if (imageNames!=null){
+                String[] strs1 = imageNames.split(",");
+                Integer[] aftIdArray = (Integer[])ConvertUtils.convert(strs1, Integer.class);
+                for (int j=0;j<aftIdArray.length;j++){
+                    imageService.deleteByPrimaryKey(aftIdArray[j]);
+                }
+            }
+            //新增修改后的图片
             String[] urls = imgUrls.split(",");
             Image image = new Image();
             StringBuffer imgName=new StringBuffer();
@@ -90,29 +103,34 @@ public class NewsController {
                 Integer imageId = imageService.findIdByName(urls[i]);
                 imgName.append(imageId + ",");
             }
-            //News news1=newsService.selectByPrimaryKey(news.getId());
-            String str=news.getImageName();
-            if (str==null){
-                news.setImageName(imgName.toString());
-               newsService.updateByPrimaryKey(news);
-            }else {
-                String[] strs = str.split(",");
-                Integer[] aftIdArray = (Integer[])ConvertUtils.convert(strs, Integer.class);
-                for (int j=0;j<aftIdArray.length;j++){
-                    imageService.deleteByPrimaryKey(aftIdArray[j]);
-                }
-                news.setImageName(imgName.toString());
-            }
+            news.setImageName(imgName.toString());
         }
         String loginUser= (String) session.getAttribute("loginUser");
         news.setModifier(loginUser);
-        news.setUpdateTime(new Date());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        news.setUpdateTime(df.format(new Date()));
         newsService.updateByPrimaryKey(news);
         return "1";
     }
     @RequestMapping("/newsDeleteById")
     @ResponseBody
-    public Map deleteNewsById(Integer uid){
+    public Map deleteNewsById(Integer uid) throws IOException {
+        String imageIds=newsService.selectByPrimaryKey(uid).getImageName();
+        if(imageIds!=null){
+            String[] strs = imageIds.split(",");
+            Integer[] aftIdArray = (Integer[])ConvertUtils.convert(strs, Integer.class);
+            for (int j=0;j<aftIdArray.length;j++){
+                String imageName=imageService.selectByPrimaryKey(aftIdArray[j]).getImgName();
+                String path="E:\\javaProject\\rongaixiang\\upload\\images";
+//                File path = new File("");
+//                File upload = new File(path.getCanonicalPath(),"src\\main\\resources\\static\\upload");
+                File file=new File(path+"/"+imageName);
+                if (file.exists()&&file.isFile()){
+                    file.delete();
+                }
+                imageService.deleteByPrimaryKey(aftIdArray[j]);
+            }
+        }
         newsService.deleteByPrimaryKey(uid);
         Map result = new HashMap();
         result.put("code" , 0);//0代表成功 其他代表失败

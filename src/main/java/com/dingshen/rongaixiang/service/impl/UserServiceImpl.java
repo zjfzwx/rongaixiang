@@ -58,5 +58,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.getAllUser();
     }
 
+    @Override
+    public Boolean checkUserName(User user) {
+       User user1= userMapper.checkUserName(user);
+       if (user1!=null&&!user1.equals("")){
+            return true;
+       }
+       return false;
+    }
+
 
 }

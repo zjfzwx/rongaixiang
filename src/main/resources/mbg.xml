@@ -36,7 +36,7 @@
             <property name="enableSubPackages" value="true"></property>
         </javaClientGenerator>
         <!-- 生成Mapper -->
-        <table tableName="image" domainObjectName="Image" enableSelectByExample="false"
+        <table tableName="contact" domainObjectName="Contact" enableSelectByExample="false"
                enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
             <columnOverride column="content_text" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
         </table>

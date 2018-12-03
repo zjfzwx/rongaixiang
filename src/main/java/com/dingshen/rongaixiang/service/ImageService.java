@@ -16,7 +16,7 @@ public interface ImageService {
 
     List<Integer> findAllImageIds(String productType);
 
-    List<Map> findAllImage();
+    List<Map> findAllImage(Integer currentPage,Integer limit);
 
     Integer findIdByName(String imageName);
 

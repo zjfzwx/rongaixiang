@@ -24,7 +24,7 @@
     </if>
   </select>
   <select id="getAllNews" resultType="java.util.Map">
-    select * from news
+    select * from news order BY id DESC limit 6
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,7 +41,7 @@
       releasetime, modifier, title,imagename,
       updatetime)
     values (#{id,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{releaseTime,jdbcType=DATE}, #{modifier,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{releaseTime,jdbcType=DATE}, #{modifier,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
       #{imageName,jdbcType=VARCHAR},#{updateTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.dingshen.rongaixiang.domain.News">

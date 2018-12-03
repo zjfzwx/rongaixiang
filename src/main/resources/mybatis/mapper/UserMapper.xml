@@ -30,6 +30,9 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="checkUserName" parameterType="com.dingshen.rongaixiang.domain.User" resultType="com.dingshen.rongaixiang.domain.User">
+    SELECT *from user where username=#{username} and password=#{password}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}

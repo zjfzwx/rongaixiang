@@ -7,12 +7,14 @@
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
     <result column="img_Infomation" jdbcType="VARCHAR" property="imgInfomation" />
     <result column="img_type" jdbcType="VARCHAR" property="imgType" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="news_id" jdbcType="VARCHAR" property="newsId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, img_name, img_url, img_Infomation, img_type
+    id, img_name, img_url, img_Infomation, img_type,product_id,news_id
   </sql>
-  <select id="findAllImage" resultType="java.util.Map">
-    select * from image where img_type!=""
+  <select id="findAllImage" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from image where img_type!="" limit #{currentPage} , #{limit}
   </select>
   <select id="findIdByName" parameterType="String" resultType="Integer">
     select id from image where img_name=#{imageName,jdbcType=VARCHAR}
@@ -32,9 +34,9 @@
   </delete>
   <insert id="insert" parameterType="com.dingshen.rongaixiang.domain.Image">
     insert into image (id, img_name, img_url, 
-      img_Infomation, img_type)
+      img_Infomation, img_type,product_id,news_id)
     values (#{id,jdbcType=INTEGER}, #{imgName,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
-      #{imgInfomation,jdbcType=VARCHAR}, #{imgType,jdbcType=VARCHAR})
+      #{imgInfomation,jdbcType=VARCHAR}, #{imgType,jdbcType=VARCHAR},#{productId,jdbcType=INTEGER},#{newsId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dingshen.rongaixiang.domain.Image">
     insert into image
@@ -54,6 +56,12 @@
       <if test="imgType != null">
         img_type,
       </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="newsId != null">
+        news_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +78,12 @@
       </if>
       <if test="imgType != null">
         #{imgType,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null">
+        #{newsId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -88,15 +102,37 @@
       <if test="imgType != null">
         img_type = #{imgType,jdbcType=VARCHAR},
       </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null">
+        news_id = #{newsId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dingshen.rongaixiang.domain.Image">
     update image
-    set img_name = #{imgName,jdbcType=VARCHAR},
-      img_url = #{imgUrl,jdbcType=VARCHAR},
-      img_Infomation = #{imgInfomation,jdbcType=VARCHAR},
-      img_type = #{imgType,jdbcType=VARCHAR}
+    <set>
+      <if test="imgName != null">
+        img_name = #{imgName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgInfomation != null">
+        img_Infomation = #{imgInfomation,jdbcType=VARCHAR},
+      </if>
+      <if test="imgType != null">
+        img_type = #{imgType,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null">
+        news_id = #{newsId,jdbcType=INTEGER},
+      </if>
+    </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

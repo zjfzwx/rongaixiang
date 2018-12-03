@@ -28,16 +28,14 @@
         <div class="layui-input-inline">
             <input type="text" name="productType" id="productType" th:value="${updateProduct.productType}" class="layui-input">
             <!--<select name="productType" id="productType">-->
-                <!--<option th:selected="${updateProduct.productType == '生活用品'}">生活用品</option>-->
-                <!--<option th:selected="${updateProduct.productType == '电子产品'}">电子产品</option>-->
-                <!--<option th:selected="${updateProduct.productType == '五金器材'}">五金器材</option>-->
+                <!--<option th:each="productType,productTypeStat:${producntTypeList}" th:text="${productType}" th:selected="${updateProduct.productType} == ${productType}">></option>-->
             <!--</select>-->
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">产品信息</label>
-        <div class="layui-input-inline">
-            <input type="text" name="information" id="information" th:value="${updateProduct.information}" class="layui-input">
+        <div class="layui-input-block">
+            <textarea type="text" style="height: 80px;width: 300px" name="information" id="information" th:text="${updateProduct.information}" class="layui-input"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
@@ -77,6 +75,7 @@
 <script>
     var form = layui.form; //只有执行了这一步，部分表单元素才会修饰成功
     var upload = layui.upload;
+
     //自定义验证规则
     form.verify({
         title: function(value){

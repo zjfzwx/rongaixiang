@@ -19,4 +19,5 @@ public interface UserService {
      int updateByPrimaryKey(User record);
 
      List<Map> getAllUser();
+     Boolean checkUserName(User user);
 }

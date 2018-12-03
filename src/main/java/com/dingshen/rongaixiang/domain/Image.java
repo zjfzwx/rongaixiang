@@ -11,6 +11,25 @@ public class Image {
 
     private String imgType;
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public Integer getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(Integer newsId) {
+        this.newsId = newsId;
+    }
+
+    private Integer productId;
+    private Integer newsId;
+
     public Integer getId() {
         return id;
     }

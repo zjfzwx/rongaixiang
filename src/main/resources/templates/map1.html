@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- http://lbsyun.baidu.com/jsdemo.htm#f0_3-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=vQO6gVpRyMzklSShAfURh54A6i1F2isj"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <title>地图展示</title>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom("重庆",12);     // 初始化地图,设置中心点坐标和地图级别
+    //添加标注地点
+    var marker = new BMap.Marker(new BMap.Point(106.376288, 29.532523));
+    map.addOverlay(marker);
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+</script>

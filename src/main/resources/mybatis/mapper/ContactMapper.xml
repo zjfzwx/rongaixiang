@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingshen.rongaixiang.mapper.ContactMapper">
+  <resultMap id="BaseResultMap" type="com.dingshen.rongaixiang.domain.Contact">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, email, phone, qq,message
+  </sql>
+  <select id="findAllContact" parameterType="java.util.Map" resultType="com.dingshen.rongaixiang.domain.Contact">
+    select * from contact where 1=1
+    <if test="type != null">
+      and product.scale = #{type}
+    </if>
+    <if test="keyword != null">
+      and job.jobname like #{keyword}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from contact
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contact
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dingshen.rongaixiang.domain.Contact">
+    insert into contact (id, name, email, 
+      phone, qq,message)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR})
+  </insert>
+</mapper>

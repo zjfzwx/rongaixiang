@@ -6,6 +6,7 @@ import com.dingshen.rongaixiang.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +40,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Map> findAllImage() {
-        return imageMapper.findAllImage();
+    public List<Map> findAllImage(Integer currentPage,Integer limit) {
+        Map map=new HashMap();
+        map.put("currentPage",currentPage);
+        map.put("limit",limit);
+        return imageMapper.findAllImage(map);
     }
 
     @Override

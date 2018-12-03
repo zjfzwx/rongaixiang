@@ -1,8 +1,6 @@
 package com.dingshen.rongaixiang.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class News {
     private Integer id;
@@ -20,14 +18,14 @@ public class News {
     private String author;
 
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date releaseTime;
+  // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String releaseTime;
 
     private String modifier;
 
     private String title;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String updateTime;
 
     public Integer getId() {
         return id;
@@ -53,11 +51,11 @@ public class News {
         this.content = content;
     }
 
-    public Date getReleaseTime() {
+    public String getReleaseTime() {
         return releaseTime;
     }
 
-    public void setReleaseTime(Date releaseTime) {
+    public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
     }
 
@@ -77,11 +75,11 @@ public class News {
         this.title = title;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }

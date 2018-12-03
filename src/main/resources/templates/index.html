@@ -32,6 +32,8 @@
     <link href="css/style.css" rel="stylesheet">
     <!-- Responsive CSS -->
     <link href="css/responsive.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="layui/css/layui.css"  media="all">-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/vendor/modernizr-2.8.1.min.js"></script>
     <script src="js/jquery-2.1.1.min.js"></script>
     <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -39,8 +41,19 @@
     <!--[if lt IE 9]>
     <script src="js/vendor/html5shim.js"></script>
     <script src="js/vendor/respond.min.js"></script>
-    <style>
+
     <![endif]-->
+    <style>
+        .logo-bg-site {
+            float: left;
+            margin-top: 18px;
+            padding: 0 10px 0 15px;
+            color: #1E9FFF;
+            font-size: 30px;
+            height: 25px;
+            line-height: 25px;
+        }
+    </style>
 </head>
 <body>
 <div id="st-container" class="st-container">
@@ -58,7 +71,7 @@
                                     <span class="icon-bar"></span>
                                 </button>
                                 <!-- offcanvas-trigger-effects -->
-                                <h1 class="logo"><a class="navbar-brand" href="/"><img src="img/logo.png" alt=""></a></h1>
+                                <h1 class="logo"><a class="logo-bg-site">荣艾翔</a></h1>
                             </div>
 
                             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -72,7 +85,6 @@
                                             <div class="submenu-inner  submenu-inner-topbottom">
                                                 <ul class="dropdown-menu">
                                                     <li><a href="#companyIntroduce">公司介绍</a></li>
-                                                    <li><a href="#registrationInformation">注册信息</a></li>
                                                 </ul>
                                             </div><!-- /.submenu-inner -->
                                         </div> <!-- /.submenu-wrapper -->
@@ -141,11 +153,12 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img src="img/slider-bg1.png" alt="Hero Slide">
+                            <img src="img/slider2.jpg" alt="Hero Slide">
                             <!--Slide Image-->
 
                             <div class="container">
                                 <div class="carousel-caption">
+                                    <div style="font-size: 48px">不断超越,追求完美</div>
                                     <small class="animated fadeIn">联系我们</small>
                                     <div class="phone animated lightSpeedIn">1-868-0743-838</div>
                                 </div>
@@ -155,9 +168,9 @@
                         </div>
                         <!--.item-->
 
-                        <div class="item">
-                            <img src="img/slider-bg2.png" alt="Hero Slide">
-                        </div>
+                        <!--<div class="item">-->
+                            <!--<img src="img/about2.jpg" alt="Hero Slide">-->
+                        <!--</div>-->
                         <!--.item-->
 
                     </div>
@@ -204,11 +217,11 @@
                     <div class="content-wrapper">
                         <div class="inner-content">
                             <ul class="list-inline" id="filter">
-                                <li><a class="active" data-group="all">产品中心</a></li>
+                                <li><a class="active" data-group="all">推荐产品</a></li>
                             </ul>
                             <div class="row four-column">
                                 <div id="grid">
-                                    <div th:each="imageList:${imageList}" class="portfolio-item col-sm-6 col-md-3"  >
+                                    <div th:each="imageList:${imageList}" class="portfolio-item col-sm-6 col-md-3" >
                                         <!--data-groups='["电子产品"]'-->
                                         <div class="single-portfolio">
                                             <img width="282" height="188" th:src="@{'showImage?filename='+${imageList.img_name}}" alt="">
@@ -224,20 +237,6 @@
                     </div>
                 </div>
                 <script>
-                    function imgChange(obj) {
-                        var $grid = $('#grid');
-                        $grid.shuffle({
-                            itemSelector: '.portfolio-item' // the selector for the items in the grid
-                        });
-                        //e.preventDefault();
-                        // set active class
-                        $('#filter a').removeClass('active');
-                        $(obj).addClass('active');
-                        // get group name from clicked item
-                        var groupName = $(obj).attr('data-group');
-                        // reshuffle grid
-                        $grid.shuffle('shuffle', groupName );
-                    };
 
                     $(function () {
                         $.ajax({
@@ -257,16 +256,39 @@
                             dataType:"json",
                             success:function (result) {
 //                                $.each(result,function (i) {
+//                                    $("#grid").append(" <div class=\"portfolio-item col-sm-6 col-md-3\" data-groups='["+'"'+result[i].img_type+'"'+"]'>\n" +
+//                                        "                    <!--data-groups='[\"电子产品\"]'-->\n" +
+//                                        "                    <div class=\"single-portfolio\">\n" +
+//                                        "                        <img width=\"282\" height=\"188\" src=\"showImage?filename="+result[i].img_name+"\" alt=\"\">\n" +
+//                                        "                        <div class=\"portfolio-links\" >\n" +
+//                                        "                            <a class=\"image-link\" href=\"showImage?filename="+result[i].img_name+"\"><i class=\"fa fa-search-plus\"></i></a>\n" +
+//                                        "                            <a href=\"singleProduct?id="+result[i].id+"\"><i class=\"fa fa-link\"></i></a>\n" +
+//                                        "                        </div><!-- /.links -->\n" +
+//                                        "                    </div><!-- /.single-portfolio -->\n" +
+//                                        "                </div><!-- /.portfolio-item -->")
+//                                })
                                          var i=0;
                                         $("#grid .portfolio-item").each(function () {
                                             $(this).attr("data-groups","["+'"'+result[i].img_type+'"'+"]")
                                             i++;
                                         })
-//                                })
-//
                             }
                         })
                     })
+                    function imgChange(obj) {
+                        var $grid = $('#grid');
+                        $grid.shuffle({
+                            itemSelector: '.portfolio-item' // the selector for the items in the grid
+                        });
+                        //e.preventDefault();
+                        // set active class
+                        $('#filter a').removeClass('active');
+                        $(obj).addClass('active');
+                        // get group name from clicked item
+                        var groupName = $(obj).attr('data-group');
+                        // reshuffle grid
+                        $grid.shuffle('shuffle', groupName );
+                    };
                 </script>
                 <!--其他-->
                 <div class="container">
@@ -293,6 +315,12 @@
                                         </div><!-- /.row -->
                                     </div><!-- /.tab-pane -->
                                 </div><!-- /.tab-content -->
+                                <div class="baidu_ads">
+                                </div>
+
+                                <span style="display:none;"></span><!-- 代码部分begin -->
+                                <div class="tcdPageCode">
+                                </div>
                             </div><!-- /.css-tab -->
                             <script>
                                 $(function(){
@@ -338,104 +366,7 @@
                                 })
                             </script>
                         </section>
-                        <!--注册信息-->
-                        <section id="registrationInformation" class="handover-wrapper">
-                            <h2 class="section-title wow fadeInDown">注册信息</h2>
-                            <div id="css-handover-carousel" class="carousel slide" data-ride="carousel">
-                                <!-- Indicators -->
-                                <ol class="carousel-indicators">
-                                    <li data-target="#css-handover-carousel" data-slide-to="0" class="active"></li>
-                                    <li data-target="#css-handover-carousel" data-slide-to="1"></li>
-                                    <li data-target="#css-handover-carousel" data-slide-to="2"></li>
-                                </ol>
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="item active">
-                                        <div class="row">
-                                            <div class="col-md-6 col-md-push-6 wow fadeRight">
-                                                <div class="handover-work-thumb">
-                                                    <img src="img/pr2.jpg" alt="">
-                                                </div><!-- /.client-thumb -->
-                                            </div><!-- /.col-md-6 -->
-
-                                            <div class="col-md-6 col-md-pull-6 wow fadeInLeft">
-                                                <div class="handover-project">
-                                                    <h3>经营范围：</h3>
-                                                    <p>销售计算机软硬件、汽车配件、摩托车配件、成品油、服装、日用杂品（不含烟花爆竹）、办公设备、建材（不含危险化学品）、家用电器、五金、建筑工程机械与设备、化工产品（不含危险化学品和易制毒品）、通用设备、文化用品、纸制品、橡胶制品、金属制品（不含稀贵金属）、通用机械、电气机械及器材，设计、制作、代理、发布...</p>
-
-                                                    <ul class="">
-                                                        <li>经营状态：存续</li>
-                                                        <li>登记机关：重庆市工商行政管理局九龙坡区分局高新区局</li>
-                                                        <li>公司类型：有限责任公司(自然人独资)</li>
-                                                        <li>成立日期：2008-01-07</li>
-                                                        <li>法定代表人：徐荣华</li>
-                                                        <li>注册资本：100万元</li>
-                                                    </ul>
-
-                                                    <!--<a class="btn btn-primary" href="portfolio-single.html" role="button">Read More</a>-->
-                                                </div><!-- /.handover-project -->
-                                            </div><!-- /.col-md-6 -->
-                                        </div><!-- /.row -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-6 col-md-push-6">
-                                                <div class="handover-work-thumb">
-                                                    <img src="img/pr2.png" alt="">
-                                                </div><!-- /.client-thumb -->
-                                            </div><!-- /.col-md-6 -->
-
-                                            <div class="col-md-6 col-md-pull-6">
-                                                <div class="handover-project">
-                                                    <h3>Proactively productivate e-business e-commerce</h3>
-                                                    <p>Efficiently communicate installed base leadership skills with extensible testing procedures. Enthusiastically evolve leading-edge scenarios.</p>
-
-                                                    <ul class="check-square">
-                                                        <li>Globally exploit interoperable infrastructures</li>
-                                                        <li>Collaboratively initiate customer directed manufactured</li>
-                                                        <li>Competently whiteboard backend information rather</li>
-                                                        <li>Efficiently empower next-generation sources</li>
-                                                        <li>Uniquely expedite sticky e-markets via orthogonal</li>
-                                                        <li>Professionally strategize orthogonal core competency</li>
-                                                    </ul>
-
-                                                    <a class="btn btn-primary" href="portfolio-single.html" role="button">Read More</a>
-                                                </div><!-- /.handover-project -->
-                                            </div><!-- /.col-md-6 -->
-                                        </div><!-- /.row -->
-                                    </div><!-- /.item -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-6 col-md-push-6">
-                                                <div class="handover-work-thumb">
-                                                    <img src="img/pr2.png" alt="">
-                                                </div><!-- /.client-thumb -->
-                                            </div><!-- /.col-md-6 -->
-
-                                            <div class="col-md-6 col-md-pull-6">
-                                                <div class="handover-project">
-                                                    <h3>Proactively productivate e-business e-commerce</h3>
-                                                    <p>Efficiently communicate installed base leadership skills with extensible testing procedures. Enthusiastically evolve leading-edge scenarios.</p>
-
-                                                    <ul class="check-square">
-                                                        <li>Globally exploit interoperable infrastructures</li>
-                                                        <li>Collaboratively initiate customer directed manufactured</li>
-                                                        <li>Competently whiteboard backend information rather</li>
-                                                        <li>Efficiently empower next-generation sources</li>
-                                                        <li>Uniquely expedite sticky e-markets via orthogonal</li>
-                                                        <li>Professionally strategize orthogonal core competency</li>
-                                                    </ul>
-
-                                                    <a class="btn btn-primary" href="portfolio-single.html" role="button">Read More</a>
-                                                </div><!-- /.handover-project -->
-                                            </div><!-- /.col-md-6 -->
-                                        </div><!-- /.row -->
-                                    </div><!-- /.item -->
-                                </div><!-- /.carousel-inner -->
-                            </div><!-- /.carousel -->
-                        </section>
-                        <!--客户评价-->
+                        <!--合作案例-->
                         <section id="example" class="testimonial-wrapper">
                             <h2 class="section-title wow fadeInDown">合作案例</h2>
                             <div id="css-testimonial-carousel" class="carousel slide" data-ride="carousel">
@@ -500,15 +431,9 @@
                         <section id="cooperation" class="trusted-client-wrapper">
                             <h2 class="section-title wow fadeInDown">合作伙伴</h2>
                             <ul class="partner-logo">
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-1.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-2.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-3.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-4.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-5.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-6.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-7.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-8.png" alt=""></a></li>
-                                <li class="wow zoomIn"><a href="#"><img src="img/partner/partner-logo-9.png" alt=""></a></li>
+                                <li class="wow zoomIn"><a href="#"><img src="img/partner/重庆大学.jpg" alt=""></a></li>
+                                <li class="wow zoomIn"><a href="#"><img src="img/partner/重庆科技学院.jpg" alt=""></a></li>
+                                <li class="wow zoomIn"><a href="#"><img src="img/partner/重庆交通大学.jpg" alt=""></a></li>
                             </ul>
                         </section>
                         <!--企业优势-->
@@ -568,18 +493,84 @@
                         <!--地图-->
                         <section id="map" class="trusted-client-wrapper">
                             <div class="row">
-                               <div class="col-md-7 ">
-                                    <iframe width="604" height="365" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/s/YvPXLV"></iframe>
+                               <div class="col-md-12 ">
+                                    <iframe width="900" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="toMap"></iframe>
                                </div>
-                                <div class="col-md-5">
-                                    <ul>
-                                        <li style="line-height: 50px">联系人：徐荣华</li>
-                                        <li style="line-height: 50px">邮箱：xbdfbi@163.com</li>
-                                        <li style="line-height: 50px">手机：18680743838</li>
-                                        <li style="line-height: 50px">地址：重庆市九龙坡区石桥铺渝州路33-28-4-1号</li>
-                                    </ul>
-                                </div>
                             </div>
+                        </section>
+                        <section class="text-center" id="contact">
+                            <div class="contact-us-form">
+                                <h2 class="wow fadeInDown">联系我们</h2>
+                                    <form id="contactForm" action="/contactAdd" method="POST">
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <label class="sr-only" for="name">Name</label>
+                                                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                                            <input id="name" name="name" type="text" class="form-control"  required="" placeholder="Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <label class="sr-only" for="email">Email address</label>
+                                                            <span class="input-group-addon" id="basic-addon2"><i class="fa fa-envelope"></i></span>
+                                                            <input id="email" name="email" type="email" class="form-control" required="" placeholder="Email">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <label class="sr-only" for="phone">Phone</label>
+                                                            <span class="input-group-addon" id="basic-addon3"><i class="fa fa-phone"></i></span>
+                                                            <input id="phone" name="phone" type="text" required class="form-control" placeholder="Phone">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <label class="sr-only" for="qq">QQ</label>
+                                                            <span class="input-group-addon" id="basic-addon4"><i class="fa fa-qq"></i></span>
+                                                            <input id="qq" name="qq" type="text" class="form-control" required="" placeholder="QQ">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-8">
+                                                <div class="input-group text-area">
+                                                    <label class="sr-only" for="message">Message</label>
+                                                    <span class="input-group-addon" id="basic-addon5"><i class="fa fa-file-text-o"></i></span>
+                                                    <textarea id="message" name="message" class="form-control" rows="4" required="" placeholder="Message"></textarea>
+                                                </div>
+                                                    </div>
+                                                    <div class="col-md-2"></div>
+                                                </div>
+                                                <button type="submit" id="submitDemo"  class="btn btn-primary btn-lg">发送</button>
+                                            </form>
+                                        </div>
+                            <script>
+                                $("#submitDemo").on("click",function () {
+                                 var name=$("#name").val();
+                                 var email=$("#email").val();
+                                 var phone=$("#phone").val();
+                                 var qq=$("#qq").val();
+                                 var message=$("#message").text();
+                                 if(name!=""&&email!=""&&phone!=""&&qq!=""&&message!=""){
+                                     swal({
+                                         title: "提交成功!",
+                                         icon: "success",
+                                     });
+                                 }else {
+                                     swal({
+                                         title: "请将信息填写完整!",
+                                         icon: "error",
+                                     });
+                                 }
+
+                                })
+                            </script>
                         </section>
                     </div><!-- /.content-wrapper -->
                 </div><!-- /.container -->
@@ -634,7 +625,7 @@
                                 <div class="footer-widget">
                                     <h3 class="wow fadeInDown">解决方案</h3>
                                     <ul class="wow fadeInDown">
-                                        <li><a href="#contactUs">联系我们</a></li>
+                                        <li><a href="#contact">联系我们</a></li>
                                         <li><a href="#">提供建议</a></li>
                                         <li><a href="#">举报投诉</a></li>
                                     </ul>
@@ -648,7 +639,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright wow fadeInDown">
-                                    <p>Copyright &copy; 2018.Company name All rights reserved.</p>
+                                    <p>版权所有 &copy; 2018.重庆荣艾翔科技有限公司</p>
                                 </div><!-- /.copyright -->
                             </div><!-- /.col-md-12 -->
                         </div><!-- /.row -->
@@ -657,61 +648,7 @@
             </div> <!-- .st-content-inner -->
         </div> <!-- .st-content -->
     </div> <!-- .st-pusher -->
-    <!-- ======== OFFCANVAS MENU ========= -->
-    <!--<div class="offcanvas-menu offcanvas-effect visible-xs">-->
-        <!--<button type="button" class="close" aria-hidden="true" data-toggle="offcanvas" id="off-canvas-close-btn">&times;</button>-->
-        <!--<h3>侧栏菜单</h3>-->
-        <!--<div>-->
-            <!--<div>-->
-                <!--<ul>-->
-                    <!--<li><a href="/">首页</a>-->
-                        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li class="active"><a href="index.html"><i class="fa fa-home"></i> Home Style One</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                    <!--</li>-->
 
-                    <!--<li><a href="#">About</a>-->
-                        <!--<ul>-->
-                            <!--<li><a href="#companyIntroduce"><i class="fa fa-life-ring"></i> 公司介绍</a></li>-->
-                            <!--<li><a href="#registrationInformation"><i class="fa fa-user"></i> 注册信息</a></li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
-
-                    <!--<li><a href="#productCenter">产品介绍</a>-->
-                        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><a href="../public/blog.html"><i class="fa fa-pencil-square-o"></i> Standard Blog</a></li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><a href="../public/blog-single.html"><i class="fa fa-pencil"></i> Single Article</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                    <!--</li>-->
-
-                    <!--<li><a href="#enterpriseDynamics">企业动态</a>-->
-                        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><a href="../public/portfolio-four.html"><i class="fa fa-picture-o"></i> Four Column</a></li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><a href="../public/portfolio-three.html"><i class="fa fa-paper-plane-o"></i> Three Column</a></li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><a href="../public/portfolio-two.html"><i class="fa fa-magic"></i> Two Column</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                    <!--</li>-->
-
-
-                    <!--<li><a href="#">企业资质</a>-->
-                        <!--<ul>-->
-                            <!--<li><a href="#example"><i class="fa fa-briefcase"></i> 合作案例</a></li>-->
-                            <!--<li><a href="#cooperation"><i class="fa fa-coffee"></i> 合作单位</a></li>-->
-
-                        <!--</ul>-->
-                    <!--</li>-->
-
-
-                    <!--<li><a href="#">更多</a>-->
-                        <!--<ul>-->
-                            <!--<li><a href="#advantage"><i class="fa fa-envelope-o"></i> 企业优势</a></li>-->
-                            <!--<li><a href="#map"><i class="fa fa-envelope-o"></i> 地图名片</a></li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>&lt;!&ndash; .offcanvas-menu &ndash;&gt;-->
 </div>
 <!-- Preloader -->
 <div id="preloader">
@@ -744,8 +681,8 @@
 <script src="js/jquery.shuffle.min.js"></script>
 <!-- Custom Script -->
 <script src="js/scripts.js"></script>
+<script src="js/jquery.page.js" charset="utf-8"></script>
 <script>
-
     (function () {
         $('.image-link2').magnificPopup({
 
@@ -759,7 +696,10 @@
         });
     }());
 </script>
+<!--<script src="layui/layui.js" charset="utf-8"></script>-->
+<script>
 
+</script>
 </body>
 
 </html>

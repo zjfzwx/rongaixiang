@@ -582,7 +582,7 @@ ADVANTAGES WRAPPER
     background-size: cover;
 }
 .advantages-wrapper.capabilities {
-    background: #000000 url('../img/capabilitiestab.jpg') no-repeat center center;
+    background: #000000 url('../img/experiencetab.jpg') no-repeat center center;
     background-size: cover;
 }
 
@@ -698,8 +698,8 @@ HANDOVER WRAPPER
 TESTIMONIAL WRAPPER
 --------------------------------------------------------------------- */
 .testimonial-wrapper {
-    background-color: #000;
-    color: #fff;
+    background-color: lightgray;
+    color: #000000;
     padding: 60px 0 0 60px;   
 }
 
